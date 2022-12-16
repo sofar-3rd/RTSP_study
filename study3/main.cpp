@@ -19,7 +19,7 @@
 #define SERVER_RTP_PORT  55532
 #define SERVER_RTCP_PORT 55533
 #define BUF_MAX_SIZE    (1024*1024)
-#define AAC_FILE_NAME   "../data/test.aac"
+#define AAC_FILE_NAME   "../data/test-long.aac"
 
 static int createTcpSocket() {
     int sockfd;

@@ -3,6 +3,7 @@
 cmake-build-debug/*
 build/*
 
+/data/*
 
 # vs
 .vs
@@ -12,6 +13,7 @@ x64/*
 study1/x64/*
 study2/x64/*
 study3/x64/*
+study4/x64/*
 
 
 
