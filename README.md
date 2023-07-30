@@ -1,7 +1,7 @@
 # BXC_RtspServer_study
 
 * 作者：北小菜 
-* 资料下载网站：http://www.any12345.com
+* 个人网站：http://www.any12345.com
 * 邮箱：bilibili_bxc@126.com
 * QQ：1402990689
 * 微信：bilibili_bxc
