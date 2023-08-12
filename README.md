@@ -10,6 +10,11 @@
 * github开源地址：https://github.com/any12345com/BXC_RtspServer_study
 * gitee开源地址：https://gitee.com/Vanishi/BXC_RtspServer_study
 
+### 项目介绍
+~~~
+BXC_RtspServer_study 是基于C++开发的RTSP服务器项目，对应《从零开始编写一个RTSP服务器》系列教程源码。
+~~~
+
 
 ### 视频教程地址：
 1. [从零开始编写一个RTSP服务器（1）RTSP协议讲解及代码实现 ](https://www.bilibili.com/video/BV1xd4y147Fb) 
@@ -21,6 +26,7 @@
 4. [从零开始编写一个RTSP服务器（4）实现一个基于TCP的RTP同时传输h264和aac的RTSP服务器，并能够进行rtsp拉流播放](https://www.bilibili.com/video/BV1kG411K7ZX) 
 
 5. [从零开始编写一个RTSP服务器（5） 基于我的开源项目BXC_RtspServer进行详细的源码讲解，这是一个完整可用，支持多线程，基于socket编写的IO多路复用的RTSP流媒体服务器](https://www.bilibili.com/video/BV1PV4y1w7GR) 
+
 
 ### windows系统编译运行
 ~~~
