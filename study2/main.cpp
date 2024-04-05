@@ -123,14 +123,16 @@ static int getFrameFromH264File(FILE* fp, char* frame, int size) {
     int rSize, frameSize;
     char* nextStartCode;
 
-    if (fp < 0)
+    if (fp == NULL)
         return -1;
-
+    // 读指定大小的字节，rSize为已读取的直接
     rSize = fread(frame, 1, size, fp);
 
+    // 判断开头是否为startcode 0x000001 0x00000001
     if (!startCode3(frame) && !startCode4(frame))
         return -1;
 
+    // nextStartCode为下一个NALU单元的开头
     nextStartCode = findNextStartCode(frame + 3, rSize - 3);
     if (!nextStartCode)
     {
@@ -142,7 +144,6 @@ static int getFrameFromH264File(FILE* fp, char* frame, int size) {
     {
         frameSize = (nextStartCode - frame);
         fseek(fp, frameSize - rSize, SEEK_CUR);
-
     }
 
     return frameSize;
@@ -156,6 +157,7 @@ static int rtpSendH264Frame(int serverRtpSockfd, const char* ip, int16_t port,
     int sendBytes = 0;
     int ret;
 
+    // 取后五位
     naluType = frame[0];
 
     printf("frameSize=%d \n", frameSize);
@@ -215,9 +217,9 @@ static int rtpSendH264Frame(int serverRtpSockfd, const char* ip, int16_t port,
             rtpPacket->payload[1] = naluType & 0x1F;
 
             if (i == 0) //第一包数据
-                rtpPacket->payload[1] |= 0x80; // start
+                rtpPacket->payload[1] |= 0x80; // start 10 00 00 00 
             else if (remainPktSize == 0 && i == pktNum - 1) //最后一包数据
-                rtpPacket->payload[1] |= 0x40; // end
+                rtpPacket->payload[1] |= 0x40; // end 01 00 00 00 
 
             memcpy(rtpPacket->payload+2, frame+pos, RTP_MAX_PKT_SIZE);
             ret = rtpSendPacketOverUdp(serverRtpSockfd, ip, port, rtpPacket, RTP_MAX_PKT_SIZE+2);
@@ -245,6 +247,7 @@ static int rtpSendH264Frame(int serverRtpSockfd, const char* ip, int16_t port,
             sendBytes += ret;
         }
     }
+    // 时间戳 = 时钟频率/帧数
     rtpPacket->rtpHeader.timestamp += 90000 / 25;
     out:
 
@@ -363,8 +366,8 @@ static void doClient(int clientSockfd, const char* clientIP, int clientPort) {
             else if (!strncmp(line, "Transport:", strlen("Transport:"))) {
                 // Transport: RTP/AVP/UDP;unicast;client_port=13358-13359
                 // Transport: RTP/AVP;unicast;client_port=13358-13359
-
-                if (sscanf(line, "Transport: RTP/AVP/UDP;unicast;client_port=%d-%d\r\n",
+                // printf("%s\n", line);
+                if (sscanf(line, "Transport: RTP/AVP;unicast;client_port=%d-%d\r\n",
                     &clientRtpPort, &clientRtcpPort) != 2) {
                     // error
                     printf("parse Transport error \n");
